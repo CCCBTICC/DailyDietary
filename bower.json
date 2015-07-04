@@ -1,0 +1,13 @@
+{
+  "name": "DailyDietary",
+  "version": "0.0.0",
+  "homepage": "https://github.com/ypling/DailyDietary",
+  "directory": "public/bower_components",
+  "authors": [
+    "ypling <leonard.li.pub@gmail.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "angularjs": "~1.4.1"
+  }
+}
