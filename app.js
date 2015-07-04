@@ -12,7 +12,7 @@ var recipes = require('./routes/recipes');
 var ingredients = require('./routes/ingredients');
 
 var monk = require('monk');
-var db = monk('localhost/DDapp');
+var db = monk('localhost/recipeApp');
 
 var app = express();
 

@@ -3,10 +3,9 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>ingredients</title>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.13/angular.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.13/angular-route.min.js"></script>
+    <script src="./bower_components/angularjs/angular.min.js"></script>
     <script>
-        var app = angular.module('ingredientsApp',['ngRoute']);
+        var app = angular.module('ingredientsApp',[]);
         var url = "http://localhost:8080/ingredients";
 //        var url = "http://localhost:8080/ingredients";
         app.controller('ingredientsCtrl', ['$scope','$http', function(scope,http){
@@ -54,6 +53,7 @@
 
         app.filter('filterForHash',function(){
             return function(items,searchText){
+                if(items === undefined||items.length===0){return;}
                 if(searchText===undefined)searchText = "";
                 var filtered={};
                 angular.forEach(items, function(item,key) {
