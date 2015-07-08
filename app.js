@@ -11,8 +11,14 @@ var recipes = require('./routes/recipes');
 
 var ingredients = require('./routes/ingredients');
 
-var monk = require('monk');
-var db = monk('localhost/recipeApp');
+var MongoClient = require('mongodb').MongoClient;
+var dbURL = 'mongodb://localhost:27017/recipeApp';
+var DB;
+
+MongoClient.connect(dbURL, function(err, db) {
+    console.log('conntected');
+    DB = db;
+});
 
 var app = express();
 
@@ -29,8 +35,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.use(function(req,res,next){
-    req.db = db;
+    req.db = DB;
     next();
 });
 

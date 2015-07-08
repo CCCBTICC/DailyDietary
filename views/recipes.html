@@ -27,12 +27,12 @@
             };
             scope.addItem= function(){
 
-            }
+            };
             function init(){
                 //init ingredients
                 http({
                     method: 'GET',
-                    url: url+"ingredients/init",
+                    url: url+"ingredients/list",
                     cache: true
                 }).success(function(data){
                     for (i in data) {

@@ -3,36 +3,34 @@
  */
 var express = require('express');
 var router = express.Router();
-var mongodb = require('mongodb');
+var ObjectId = require('mongodb').ObjectID;
+
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
     res.sendfile("./views/ingredients.html");
 });
-router.get('/init', function(req, res, next) {
-    req.db.get("ingredients").find({},{},function(e,docs){
-        res.write(JSON.stringify(docs));
-        res.end();
+
+router.get('/list', function (req, res, next) {
+    req.db.collection("ingredients").find().toArray(function (err, result) {
+        res.send(result);
     });
 });
 
-router.post('/', function(req, res) {
+router.post('/', function (req, res) {
     console.log(req.body);
     switch (req.body.action) {
         case "add":
-            req.db.get("ingredients").insert({name:req.body.name}, {w: 1}, function (err, records) {
-                console.log("Record added as " + records._id);
-                res.write(JSON.stringify(records));
-                res.end();
+            req.db.collection("ingredients").insertOne({name: req.body.name}, function (err, result) {
+                res.send(result.ops[0]);
             });
             break;
         case "remove":
-            var record="";
-            req.db.get("ingredients").findById(req.body.id,function(err,docs){
-                record = docs;
-                req.db.get("ingredients").remove(record, function () {
+            req.db.collection("ingredients").findAndRemove({_id: new ObjectId(req.body.id)}, [['b', 1]], function (err, result) {
+                if (result) {
+                    console.log(result);
                     res.end();
-                });
+                }
             });
             break;
     }

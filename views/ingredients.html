@@ -33,14 +33,14 @@
                     data: {action:"add",name:scope.input}
                 }).success(function(data){
                     scope.input="";
-                    scope.ingredients[data._id] = {name:data.name};
+                        scope.ingredients[data._id] = {name:data.name};
                 });
             }
 
             function init(){
                 http({
                     method: 'GET',
-                    url: url+"/init",
+                    url: url+"/list",
                     cache: true
                 }).success(function(data){
                     for (i in data) {
