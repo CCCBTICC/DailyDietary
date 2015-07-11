@@ -7,9 +7,9 @@ menuCtrl.controller('ingredientCtrl', function ($scope, ingredientsManager) {
     $scope.compare = [];
     ingredientsManager.getIngredients(function (ref) {
         $scope.ingredients = ref;
-        for (var x in $scope.ingredients) {
-            $scope.compare.push($scope.ingredients[x].name);
-        }
+        $scope.ingredients.forEach(function(ingredient){
+            $scope.compare.push(ingredient.name);
+        });
     });
     $scope.add = function (name) {
         if ($scope.compare.indexOf(name) < 0) {
@@ -37,8 +37,6 @@ menuCtrl.controller('recipeCtrl', function ($scope, recipesManager, ingredientsM
     recipesManager.getDictionary(function (data) {
         $scope.dictionary = data;
     });
-    console.log("in recipe:");
-    console.log($scope.dictionary);
     recipesManager.getTempRecipe(function (ref) {
         $scope.temprecipe = ref;
     });
@@ -68,6 +66,7 @@ menuCtrl.controller('recipeCtrl', function ($scope, recipesManager, ingredientsM
         }
         recipesManager.addRecipe(name, $scope.recipe, function (data) {
             $scope.entered = '';
+            $("button").removeClass("btn-danger");
             $scope.recipes.push(data);
         });
     };
@@ -95,18 +94,17 @@ menuCtrl.controller('menuCtrl', function ($scope, recipesManager) {
         }
     };
     var detail = function (array) {
-        var x, y;
         $scope.list = [];
-        for (x in array) {
-            for (y in array[x].ingredients) {
-                add(array[x].ingredients[y], $scope.list);
-            }
-        }
+        array.forEach(function(recipe){
+            recipe.ingredients.forEach(function(ingredient){
+                add(ingredient,$scope.list);
+            });
+        });
     };
     recipesManager.getTempMenu(function (ref) {
         $scope.mSelected = ref;
         detail($scope.mSelected);
-    })
+    });
     $scope.select = function (recipe) {
         $scope.mSelected.push(recipe);
         detail($scope.mSelected);

@@ -45,14 +45,14 @@ menuFactory.factory('ingredientsManager', function ($http) {
 });
 
 menuFactory.factory('recipesManager', function ($http, ingredientsManager) {
-    var dictionary = {};
-    var updateDictionary = function () {
+    var updateDictionary = function (callback) {
         ingredientsManager.getIngredients(function (data) {
-            dictionary = {};
-            for (var i in data) {
-                dictionary[data[i]._id] = data[i];
-            }
-        })
+            var dictionary = {};
+            data.forEach(function (ingredient) {
+                dictionary[ingredient._id] = ingredient;
+            });
+            callback(dictionary);
+        });
     };
     var recipesUrl = "http://localhost:8080/recipes";
     var recipes = [],
@@ -87,9 +87,7 @@ menuFactory.factory('recipesManager', function ($http, ingredientsManager) {
             post(data, callback);
         },
         getDictionary: function (callback) {
-            updateDictionary();
-            console.log(dictionary1);
-            callback(dictionary);
+            updateDictionary(callback);
         },
         getTempMenu: function (callback) {
             callback(tempMenu);
