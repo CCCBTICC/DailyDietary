@@ -37,9 +37,6 @@ menuCtrl.controller('recipeCtrl', function ($scope, recipesManager, ingredientsM
     recipesManager.getDictionary(function (data) {
         $scope.dictionary = data;
     });
-    recipesManager.getTempRecipe(function (ref) {
-        $scope.temprecipe = ref;
-    });
     recipesManager.getRecipes(function (ref) {
         $scope.recipes = ref;
     });

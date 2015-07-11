@@ -6,7 +6,6 @@ var menuFactory = angular.module('menuFactories', []);
 menuFactory.factory('ingredientsManager', function ($http) {
     var ingredientsUrl = "http://localhost:8080/ingredients";
     var ingredients = [];
-
     var get = function (callback) {
         if (!ingredients[0]) {
             $http.get(ingredientsUrl).success(function (data) {
@@ -56,8 +55,7 @@ menuFactory.factory('recipesManager', function ($http, ingredientsManager) {
     };
     var recipesUrl = "http://localhost:8080/recipes";
     var recipes = [],
-        tempMenu = [],
-        tempRecipe = [];
+        tempMenu = [];
 
     var get = function (callback) {
         if (!recipes[0]) {
@@ -95,9 +93,6 @@ menuFactory.factory('recipesManager', function ($http, ingredientsManager) {
         updateRecipe: function () {
         },
         modifyRecipe: function () {
-        },
-        getTempRecipe: function (callback) {
-            callback(tempRecipe);
         }
     }
 });

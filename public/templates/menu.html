@@ -33,12 +33,12 @@
             </div>
             <div class="panel-body">
                 <div class="col-md-4 thumbnail" ng-repeat="recipe in recipes">
-                    <button class="btn btn-default btn-link btn-block" ng-click="select(recipe)"/>
+                    <button class="btn btn-default btn-link btn-block" ng-click="select(recipe)">
                     <h4>{{recipe.name}}</h4>
                     </button>
                     <img src="../images/thumb.jpg" style="width:150px;height:150px"/>
                     <ul class="sr-only">
-                        <li ng-repeat="id in recipe.ingredients" with="20">
+                        <li ng-repeat="id in recipe.ingredients">
                             {{dictionary[id].name}}
                         </li>
                     </ul>
