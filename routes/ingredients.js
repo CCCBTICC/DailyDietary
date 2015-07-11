@@ -1,27 +1,22 @@
 /**
- * Created by ypling on 2/16/15.
+ * Created by Chenghuijin on 2015/7/7.
  */
 var express = require('express');
 var router = express.Router();
 var ObjectId = require('mongodb').ObjectID;
 
 
-/* GET users listing. */
 router.get('/', function (req, res, next) {
-    res.sendfile("./views/ingredients.html");
-});
-
-router.get('/list', function (req, res, next) {
+    console.log("request recieved");
     req.db.collection("ingredients").find().toArray(function (err, result) {
         res.send(result);
     });
 });
-
 router.post('/', function (req, res) {
     console.log(req.body);
     switch (req.body.action) {
         case "add":
-            req.db.collection("ingredients").insertOne({name: req.body.name}, function (err, result) {
+            req.db.collection("ingredients").insertOne({name: req.body.name, class: ""}, function (err, result) {
                 res.send(result.ops[0]);
             });
             break;

@@ -1,17 +1,13 @@
 /**
- * Created by ypling on 2/16/15.
+ * Created by Chenghuijin on 2015/7/7.
  */
 var express = require('express');
 var router = express.Router();
-
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-    res.sendfile("./views/recipes.html");
-});
+var ObjectId = require('mongodb').ObjectID;
 
 
-router.get('/list', function(req, res, next) {
-    req.db.collection("recipes").find().toArray(function(err,result){
+router.get('/', function (req, res, next) {
+    req.db.collection("recipes").find().toArray(function (err, result) {
         res.send(result);
     });
 });
@@ -19,7 +15,10 @@ router.get('/list', function(req, res, next) {
 router.post('/', function (req, res) {
     switch (req.body.action) {
         case "add":
-            req.db.collection("recipes").insertOne({name: req.body.name, ingredients:req.body.ingredients}, function (err, result) {
+            req.db.collection("recipes").insertOne({
+                name: req.body.name,
+                ingredients: req.body.ingredients
+            }, function (err, result) {
                 res.send(result.ops[0]);
             });
             break;
@@ -33,5 +32,6 @@ router.post('/', function (req, res) {
             break;
     }
 });
+
 
 module.exports = router;

@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Selected:</h4>
+            </div>
+            <div class="panel-body" style="height: 300px;overflow:auto;">
+                <div class="row" ng-repeat="recipe in mSelected track by $index">
+                    <div class="col-md-offset-1 col-md-8">
+                        <div class="thumbnail">
+                            {{recipe.name}}<a class="close" ng-click="release(recipe)">X</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Ingredients Used:</h4>
+            </div>
+            <div class="panel-body">
+                <ul>
+                    <li ng-repeat="id in list">{{dictionary[id].name}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1>Today's Special!</h1>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-4 thumbnail" ng-repeat="recipe in recipes">
+                    <button class="btn btn-default btn-link btn-block" ng-click="select(recipe)"/>
+                    <h4>{{recipe.name}}</h4>
+                    </button>
+                    <img src="../images/thumb.jpg" style="width:150px;height:150px"/>
+                    <ul class="sr-only">
+                        <li ng-repeat="id in recipe.ingredients" with="20">
+                            {{dictionary[id].name}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

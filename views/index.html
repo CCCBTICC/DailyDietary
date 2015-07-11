@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test1</title>
+    <script src="./bower_components/angular/angular.min.js"></script>
+    <script src="./bower_components/angular-route/angular-route.min.js"></script>
+    <script src="./bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+    <script src="./JS/app.js"></script>
+    <script src="./JS/factories.js"></script>
+    <script src="./JS/controllers.js"></script>
+</head>
+<body ng-app="menuApp">
+<div class="container">
+    <nav class="navbar navbar-default">
+        <div class="navbaar-header">
+            <a href="#" class="navbar-brand"><h3>Components</h3></a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav">
+                <li><a href="#/menu"><h3>Menu</h3></a></li>
+                <li><a href="#/recipe"><h3>Recipes</h3></a></li>
+                <li><a href="#/ingredient"><h3>Ingredients</h3></a></li>
+            </ul>
+        </div>
+    </nav>
+    <!--<img src="./thumb.jpg" title="title" data-toggle="popover" data-trigger="hover" style="width:150px;height:150px" />-->
+    <!--<script>-->
+    <!--$(document).ready(function(){-->
+    <!--$('[data-toggle="popover"]').popover();-->
+    <!--});-->
+    <!--</script>-->
+    <div id="curtain">
+        <img src="./images/thumb.jpg" style="width:800px;height:600px;"/>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("li a").click(function () {
+                $("div#curtain").hide();
+                $(".active").removeClass("active");
+                $(this).parent().addClass("active");
+            });
+            $("a.navbar-brand").click(function () {
+                $("div#curtain").show();
+                $(".active").removeClass("active");
+            });
+        });
+    </script>
+    <div ng-view></div>
+    <!--<script>-->
+    <!--$(document).ready(function(){-->
+    <!--$('[data-toggle="popover"]').popover();-->
+    <!--});-->
+    <!--</script>-->
+</div>
+</body>
+</html>
