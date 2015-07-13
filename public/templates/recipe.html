@@ -4,10 +4,11 @@
             <h3>Ingredients: Click to select!</h3>
         </div>
         <div class="panel-body" style="height:300px;overflow: auto">
-            <div class="col-md-3 col-sm-6 col-lg-2" ng-repeat="x in ingredients">
+            <div class="col-md-3 col-sm-6 col-lg-2" ng-repeat="(id,ingredient) in dictionary">
                 <br>
-                <button class="btn btn-block btn-info btn-lg" ng-click="onclick(x._id)" id="{{x._id}}"
-                        style="overflow: hidden">{{x.name}}
+                <button class="btn btn-block btn-lg" ng-click="onclick(id)"
+                        ng-class="ingredient.select ? 'btn-danger':'btn-info'"
+                        style="overflow: hidden">{{ingredient.name}}
                 </button>
             </div>
         </div>
@@ -26,7 +27,7 @@
                             <div class="col-md-8">
                                 <input type="text" class="form-control " id="newRecipe" ng-model="entered"
                                        placeholder="Enter Recipe"/></div>
-                            <button class="btn btn-default col-md-1" ng-disabled="!entered || !temprecipe[0]"
+                            <button class="btn btn-default col-md-1" ng-disabled="!entered"
                                     ng-click="save(entered)">save
                             </button>
                         </div>
@@ -35,8 +36,8 @@
                             <div class="col-md-10">
                                 <div class="panel-body" id="ingredients">
                                     <div class="row">
-                                        <div class="col-md-4 alert alert-warning" ng-repeat="x in temprecipe">
-                                            {{dictionary[x].name}} <a class="close" ng-click="release(x)">X</a>
+                                        <div class="col-md-4 alert alert-warning" ng-repeat="(id,ingredient) in dictionary" ng-show="ingredient.select">
+                                            {{ingredient.name}} <a class="close" ng-click="release(id)">X</a>
                                         </div>
                                     </div>
                                 </div>
@@ -53,7 +54,7 @@
                     <h4>Existing Recipes:</h4>
                 </div>
                 <div class="panel-body" style="height: 300px;overflow:auto;">
-                    <div class="row" ng-repeat="x in recipes track by $index">
+                    <div class="row" ng-repeat="x in recipes | filter:''">
                         <div class="col-md-offset-1 col-md-9">
                             <div class="thumbnail">
                                 {{x.name}}<a class="close" ng-click="remove(x)">X</a>

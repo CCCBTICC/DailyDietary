@@ -36,7 +36,7 @@
                     <button class="btn btn-default btn-link btn-block" ng-click="select(recipe)">
                     <h4>{{recipe.name}}</h4>
                     </button>
-                    <img src="../images/thumb.jpg" style="width:150px;height:150px"/>
+                    <img src="../images/thumb.jpg" style="width:150px;height:150px" popover="xxxx" popover-trigger="mouseenter"/>
                     <ul class="sr-only">
                         <li ng-repeat="id in recipe.ingredients">
                             {{dictionary[id].name}}

@@ -1,7 +1,7 @@
 /**
  * Created by Chenghuijin on 2015/7/6.
  */
-var app = angular.module('menuApp', ['ngRoute', 'menuFactories', 'menuControllers']);
+var app = angular.module('menuApp', ['ui.bootstrap','ngRoute', 'menuFactories', 'menuControllers']);
 app.config(function ($routeProvider) {
     $routeProvider.
         when('/menu', {
@@ -18,4 +18,20 @@ app.config(function ($routeProvider) {
         }).otherwise({
             redirectTo: '/'
         });
+});
+app.filter('filterForHash',function(){
+    return function(items,searchText){
+        if(searchText===undefined)searchText = "";
+        var filtered=[];
+        angular.forEach(items, function(item) {
+            if(item.data.select.indexOf(searchText)!==-1) filtered.push(item);
+        });
+        return filtered;
+    }
+});
+app.filter('startFrom', function() {
+    return function(input, start) {
+        start = +start; //parse to int
+        return input.slice(start);
+    }
 });

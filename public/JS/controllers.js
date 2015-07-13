@@ -3,14 +3,31 @@
  */
 var menuCtrl = angular.module('menuControllers', []);
 
+menuCtrl.controller('headCtrl',function($scope,$location){
+    $scope.isCollapsed = false;
+    $scope.isActive = function(viewlocation){
+        return $location.path().indexOf(viewlocation) == 0;
+    };
+    $scope.closeCurtain = function(){
+        return /[mri]/.test($location.path());
+    };
+
+});
+
 menuCtrl.controller('ingredientCtrl', function ($scope, ingredientsManager) {
     $scope.compare = [];
     ingredientsManager.getIngredients(function (ref) {
         $scope.ingredients = ref;
-        $scope.ingredients.forEach(function(ingredient){
+        $scope.ingredients.forEach(function (ingredient) {
             $scope.compare.push(ingredient.name);
         });
     });
+
+    $scope.currentPage = 0;
+    $scope.pageSize = 8;
+    $scope.numberOfPages=function(){
+        return Math.ceil($scope.ingredients.length/$scope.pageSize);
+    };
     $scope.add = function (name) {
         if ($scope.compare.indexOf(name) < 0) {
             ingredientsManager.addIngredient(name, function (data) {
@@ -30,10 +47,7 @@ menuCtrl.controller('ingredientCtrl', function ($scope, ingredientsManager) {
     };
 });
 
-menuCtrl.controller('recipeCtrl', function ($scope, recipesManager, ingredientsManager) {
-    ingredientsManager.getIngredients(function (ref) {
-        $scope.ingredients = ref;
-    });
+menuCtrl.controller('recipeCtrl', function ($scope, recipesManager) {
     recipesManager.getDictionary(function (data) {
         $scope.dictionary = data;
     });
@@ -41,29 +55,28 @@ menuCtrl.controller('recipeCtrl', function ($scope, recipesManager, ingredientsM
         $scope.recipes = ref;
     });
     $scope.select = function (id) {
-        $scope.temprecipe.push(id);
-        $("button#" + id).addClass("btn-danger");
+        $scope.dictionary[id].select = true;
     };
     $scope.release = function (id) {
-        var i = $scope.temprecipe.indexOf(id);
-        $scope.temprecipe.splice(i, 1);
-        $("button#" + id).removeClass("btn-danger");
+        $scope.dictionary[id].select = false;
     };
     $scope.onclick = function (id) {
-        if ($scope.temprecipe.indexOf(id) < 0) {
-            $scope.select(id);
-        } else {
+        if ($scope.dictionary[id].select) {
             $scope.release(id);
+        } else {
+            $scope.select(id);
         }
     };
     $scope.save = function (name) {
         $scope.recipe = [];
-        while ($scope.temprecipe[0]) {
-            $scope.recipe.push($scope.temprecipe.shift());
-        }
+        Object.keys($scope.dictionary).forEach(function (id) {
+            if ($scope.dictionary[id].select) {
+                $scope.recipe.push(id);
+                $scope.dictionary[id].select = false;
+            }
+        });
         recipesManager.addRecipe(name, $scope.recipe, function (data) {
             $scope.entered = '';
-            $("button").removeClass("btn-danger");
             $scope.recipes.push(data);
         });
     };
@@ -73,11 +86,13 @@ menuCtrl.controller('recipeCtrl', function ($scope, recipesManager, ingredientsM
             $scope.recipes.splice(i, 1);
         });
     };
+
     $scope.modify = function (item) {
     };
     $scope.update = function (db) {
-    };
+    }
 });
+
 menuCtrl.controller('menuCtrl', function ($scope, recipesManager) {
     recipesManager.getRecipes(function (ref) {
         $scope.recipes = ref;
@@ -92,9 +107,9 @@ menuCtrl.controller('menuCtrl', function ($scope, recipesManager) {
     };
     var detail = function (array) {
         $scope.list = [];
-        array.forEach(function(recipe){
-            recipe.ingredients.forEach(function(ingredient){
-                add(ingredient,$scope.list);
+        array.forEach(function (recipe) {
+            recipe.ingredients.forEach(function (ingredient) {
+                add(ingredient, $scope.list);
             });
         });
     };

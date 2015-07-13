@@ -96,3 +96,12 @@ menuFactory.factory('recipesManager', function ($http, ingredientsManager) {
         }
     }
 });
+
+menuFactory.factory('navManager',function(){
+    var clicked={menu:false,recipe:false,ingredient:false};
+    return{
+        getClicked:function(callback){
+            callback(clicked);
+        }
+    }
+});

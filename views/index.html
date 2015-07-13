@@ -8,52 +8,56 @@
     <script src="./bower_components/jquery/dist/jquery.min.js"></script>
     <script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+    <script src="./bootstrap-gh-pages/ui-bootstrap-tpls-0.13.0.js"></script>
     <script src="./JS/app.js"></script>
     <script src="./JS/factories.js"></script>
     <script src="./JS/controllers.js"></script>
 </head>
-<body ng-app="menuApp">
-<div class="container">
-    <nav class="navbar navbar-default">
-        <div class="navbaar-header">
-            <a href="#" class="navbar-brand"><h3>Components</h3></a>
+<body ng-app="menuApp" ng-controller="headCtrl">
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="#" class="navbar-brand visible-xs">DailyDietary</a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-3" ng-click="isCollapsed = !isCollapsed">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <nav class="hidden-xs">
+                <a href="#" class="navbar-brand">DailyDietary</a>
+                <ul class="nav navbar-nav right">
+                    <li ng-class="{ active: isActive('/menu') }"><a href="#/menu">Menu</a></li>
+                    <li ng-class="isActive('/recipe') ?'active':''"><a href="#/recipe">Recipes</a></li>
+                    <li ng-class="isActive('/ingredient') ?'active':''"><a href="#/ingredient">Ingredients</a></li>
+                </ul>
+            </nav>
+            <nav class="visible-xs collapse" collapse="!isCollapsed" style="overflow: hidden">
+                <ul class="nav navbar-nav">
+                    <li ng-class="{ active: isActive('/menu') }"><a href="#/menu"
+                                                                    ng-click="isCollapsed = !isCollapsed">Menu</a></li>
+                    <li ng-class="isActive('/recipe') ?'active':''"><a href="#/recipe"
+                                                                       ng-click="isCollapsed = !isCollapsed">Recipes</a>
+                    </li>
+                    <li ng-class="isActive('/ingredient') ?'active':''"><a href="#/ingredient"
+                                                                           ng-click="isCollapsed = !isCollapsed">Ingredients</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
-        <div>
-            <ul class="nav navbar-nav">
-                <li><a href="#/menu"><h3>Menu</h3></a></li>
-                <li><a href="#/recipe"><h3>Recipes</h3></a></li>
-                <li><a href="#/ingredient"><h3>Ingredients</h3></a></li>
-            </ul>
-        </div>
-    </nav>
-    <!--<img src="./thumb.jpg" title="title" data-toggle="popover" data-trigger="hover" style="width:150px;height:150px" />-->
-    <!--<script>-->
-    <!--$(document).ready(function(){-->
-    <!--$('[data-toggle="popover"]').popover();-->
-    <!--});-->
-    <!--</script>-->
-    <div id="curtain">
+    </div>
+</nav>
+<div class="header-placeholder"><br><br><br></div>
+<div role="main" class="container">
+    <div ng-hide="closeCurtain()" class="text-center">
         <img src="./images/thumb.jpg" style="width:800px;height:600px;"/>
     </div>
-    <script>
-        $(document).ready(function () {
-            $("li a").click(function () {
-                $("div#curtain").hide();
-                $(".active").removeClass("active");
-                $(this).parent().addClass("active");
-            });
-            $("a.navbar-brand").click(function () {
-                $("div#curtain").show();
-                $(".active").removeClass("active");
-            });
-        });
-    </script>
-    <div ng-view></div>
-    <!--<script>-->
-    <!--$(document).ready(function(){-->
-    <!--$('[data-toggle="popover"]').popover();-->
-    <!--});-->
-    <!--</script>-->
+    <div class="container">
+        <div ng-view></div>
+    </div>
 </div>
 </body>
 </html>

@@ -1,27 +1,64 @@
+<br>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-md-7 col-sm-6 col-lg-8">
+                <label class="h4">Existing Ingredients:</label>
+            </div>
+            <div class="col-md-5 col-sm-6 col-lg-4 col-xs-12">
+                <form action="" role="form" class="form-inline">
+                    <div class="form-group">
+                        <select class="form-control" id="searchByClass" ng-model="class">
+                            <option></option>
+                            <option>fish</option>
+                        </select>
+                        <input type="text" class="form-control" id="search" ng-model="query" placeholder="Search">
+                        <span class="glyphicon glyphicon-search"></span></input>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>class</th>
+                <th>action</th>
+            </tr>
+            </thead>
+            <tr ng-repeat="x in ingredients | filter:query | filter:class | startFrom:currentPage*pageSize | limitTo:pageSize">
+                <td>{{x._id}}</td>
+                <td>{{x.name}}</td>
+                <td>{{x.class}}</td>
+                <td>
+                    <a class="btn btn-default btn-sm btn-warning" ng-click="">Edit <span
+                            class="glyphicon glyphicon-edit"></span></a>
+                    <a class="btn btn-default btn-sm btn-danger" ng-click="remove(x)">Delete <span
+                            class="glyphicon glyphicon-remove"></span></a>
+                </td>
+            </tr>
+        </table>
+<hr>
+        <button class="btn btn-default previous" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+            Previous
+        </button>
+        {{currentPage+1}}/{{numberOfPages()}}
+        <button class="btn btn-default next" ng-disabled="currentPage >= ingredients.length/pageSize - 1"
+                ng-click="currentPage=currentPage+1">
+            Next
+        </button>
+    </div>
+</div>
+
+
 <form action="" role="form" class="form-inline">
     <div class="form-group">
         <label for="ingredient">New Ingredient:</label>
         <input type="text" class="form-control" id="ingredient" placeholder="Enter ingredient" ng-model="entered"/>
         <button class="btn btn-default form-control" ng-disabled="!entered" ng-click="add(entered)">add</button>
     </div>
-    <div class="form-group">
-        <label for="search">Search:</label>
-        <input type="text" class="form-control" id="search" ng-model="query" placeholder="By Name"/>
-        <select class="form-control" id="searchByClass" ng-model="class">
-            <option></option>
-            <option>fish</option>
-        </select>
-    </div>
+
 </form>
-<br>
-<div class="panel panel-default">
-    <div class="panel-heading">Existing Ingredients:
-    </div>
-    <div class="panel-body">
-        <div class="col-md-3 col-lg-2 col-sm-6" ng-repeat="x in ingredients | filter:query | filter:class">
-            <div class="thumbnail" style="overflow: hidden">
-                {{x.name}}<a class="close" ng-click="remove(x)">X</a>
-            </div>
-        </div>
-    </div>
-</div>
