@@ -1,68 +1,115 @@
-<div class="container-fluid">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3>Ingredients: Click to select!</h3>
-        </div>
-        <div class="panel-body" style="height:300px;overflow: auto">
-            <div class="col-md-3 col-sm-6 col-lg-2" ng-repeat="(id,ingredient) in dictionary">
-                <br>
-                <button class="btn btn-block btn-lg" ng-click="onclick(id)"
-                        ng-class="ingredient.select ? 'btn-danger':'btn-info'"
-                        style="overflow: hidden">{{ingredient.name}}
-                </button>
+<br>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-md-7 col-sm-6 col-lg-8">
+                <label class="h4">Existing Recipes:</label>
+            </div>
+            <div class="col-md-5 col-sm-6 col-lg-4 col-xs-12">
+                <form action="" role="form" class="form-inline">
+                    <div class="form-group">
+                        <select class="form-control" id="searchByClass" ng-model="class">
+                            <option></option>
+                            <option>appitizer</option>
+                        </select>
+                        <input type="text" class="form-control" id="search" ng-model="query" placeholder="Search">
+                        <span class="glyphicon glyphicon-search"></span></input>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-9">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4>Add new Recipe!</h4>
-                </div>
-                <div class="panel-body">
-                    <form action="" class="form-horizontal" role="form">
-                        <div class="form-group">
-                            <label class="control-label col-md-2" for="newRecipe">New recipe:</label>
+    <div class="panel-body">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>class</th>
+                <th>ingredients</th>
+                <th>action</th>
+            </tr>
+            </thead>
+            <tr ng-repeat="x in recipes | filter:query | filter:class | startFrom:currentPage*pageSize | limitTo:pageSize">
+                <td>{{x._id}}</td>
+                <td>{{x.name}}</td>
+                <td>{{x.class}}</td>
+                <td>
+                    {{x.ingredients[0]}},{{x.ingredients[1]}}...
+                </td>
+                <td>
+                    <a class="btn btn-default btn-sm btn-warning" ng-click="">Edit <span
+                            class="glyphicon glyphicon-edit"></span></a>
+                    <a class="btn btn-default btn-sm btn-danger" ng-click="remove(x)">Delete <span
+                            class="glyphicon glyphicon-remove"></span></a>
+                </td>
+            </tr>
+        </table>
+        <hr>
+        <button class="btn btn-default previous" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+            Previous
+        </button>
+        {{currentPage+1}}/{{numberOfPages()}}
+        <button class="btn btn-default next" ng-disabled="currentPage >= recipes.length/pageSize - 1"
+                ng-click="currentPage=currentPage+1">
+            Next
+        </button>
 
-                            <div class="col-md-8">
-                                <input type="text" class="form-control " id="newRecipe" ng-model="entered"
-                                       placeholder="Enter Recipe"/></div>
-                            <button class="btn btn-default col-md-1" ng-disabled="!entered"
-                                    ng-click="save(entered)">save
-                            </button>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2" for="ingredients">Ingredients Used:</label>
-                            <div class="col-md-10">
-                                <div class="panel-body" id="ingredients">
-                                    <div class="row">
-                                        <div class="col-md-4 alert alert-warning" ng-repeat="(id,ingredient) in dictionary" ng-show="ingredient.select">
-                                            {{ingredient.name}} <a class="close" ng-click="release(id)">X</a>
-                                        </div>
+    </div>
+</div>
+
+<button popover-template="'templateUrl'" popover-title="New ingredient" class="btn btn-default">Add new ingredient
+</button>
+<script type="text/ng-template" id="templateUrl">
+
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>Ingredients: Click to select!</h3>
+            </div>
+            <div class="panel-body" style="height:300px;overflow: auto">
+                <div class="col-md-3 col-sm-6 col-lg-2" ng-repeat="(id,ingredient) in dictionary">
+                    <br>
+                    <button class="btn btn-block btn-lg" ng-click="onclick(id)"
+                            ng-class="ingredient.select ? 'btn-danger':'btn-info'"
+                            style="overflow: hidden">{{ingredient.name}}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Add new Recipe!</h4>
+            </div>
+            <div class="panel-body">
+                <form action="" class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="newRecipe">New recipe:</label>
+
+                        <div class="col-md-8">
+                            <input type="text" class="form-control " id="newRecipe" ng-model="entered"
+                                   placeholder="Enter Recipe"/></div>
+                        <button class="btn btn-default col-md-1" ng-disabled="!entered"
+                                ng-click="save(entered)">save
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="ingredients">Ingredients Used:</label>
+
+                        <div class="col-md-10">
+                            <div class="panel-body" id="ingredients">
+                                <div class="row">
+                                    <div class="col-md-4 alert alert-warning" ng-repeat="(id,ingredient) in dictionary"
+                                         ng-show="ingredient.select">
+                                        {{ingredient.name}} <a class="close" ng-click="release(id)">X</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-            <p></p>
-        </div>
-        <div class=" col-md-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4>Existing Recipes:</h4>
-                </div>
-                <div class="panel-body" style="height: 300px;overflow:auto;">
-                    <div class="row" ng-repeat="x in recipes | filter:''">
-                        <div class="col-md-offset-1 col-md-9">
-                            <div class="thumbnail">
-                                {{x.name}}<a class="close" ng-click="remove(x)">X</a>
-                            </div>
-                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
-</div>
+</script>

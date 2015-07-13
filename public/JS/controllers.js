@@ -54,6 +54,12 @@ menuCtrl.controller('recipeCtrl', function ($scope, recipesManager) {
     recipesManager.getRecipes(function (ref) {
         $scope.recipes = ref;
     });
+    $scope.currentPage = 0;
+    $scope.pageSize = 8;
+    $scope.numberOfPages=function(){
+        return Math.ceil($scope.recipes.length/$scope.pageSize);
+    };
+
     $scope.select = function (id) {
         $scope.dictionary[id].select = true;
     };
