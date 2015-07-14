@@ -8,6 +8,7 @@ menuFactory.factory('ingredientsManager', function ($http) {
     var ingredients = [];
     var get = function (callback) {
         if (!ingredients[0]) {
+            console.log("1\n");
             $http.get(ingredientsUrl).success(function (data) {
                 ingredients = data;
                 ingredients.sort(function (a, b) {

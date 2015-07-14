@@ -1,84 +1,102 @@
-<br>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <div class="row">
-            <div class="col-md-7 col-sm-6 col-lg-8">
-                <label class="h4">Existing Ingredients:</label>
+<div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-md-7 col-sm-6 col-lg-8">
+                    <label class="h4">Existing Ingredients:</label>
+                </div>
+                <div class="col-md-5 col-sm-6 col-lg-4 col-xs-12">
+                    <form action="" role="form" class="form-inline">
+                        <div class="form-group">
+                            <select class="form-control" id="searchByClass" ng-model="class">
+                                <option></option>
+                                <option>fish</option>
+                            </select>
+
+                            <div class="btn-group">
+                                <button class="btn btn-default"><span class="glyphicon glyphicon-search"></span>
+                                </button>
+                                <input type="text" class="form-control" id="search" ng-model="query"
+                                       placeholder="Search"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="col-md-5 col-sm-6 col-lg-4 col-xs-12">
-                <form action="" role="form" class="form-inline">
-                    <div class="form-group">
-                        <select class="form-control" id="searchByClass" ng-model="class">
-                            <option></option>
-                            <option>fish</option>
-                        </select>
-                        <input type="text" class="form-control" id="search" ng-model="query" placeholder="Search">
-                        <span class="glyphicon glyphicon-search"></span></input>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>class</th>
+                    <th>action</th>
+                </tr>
+                </thead>
+                <tr ng-repeat="x in ingredients | filter:query | filter:class | startFrom:currentPage*pageSize | limitTo:pageSize">
+                    <td>{{x._id}}</td>
+                    <td>{{x.name}}</td>
+                    <td>{{x.class}}</td>
+                    <td>
+                        <a class="btn btn-default btn-sm btn-warning" ng-click=""><span
+                                class="glyphicon glyphicon-edit"></span> Edit</a>
+                        <a class="btn btn-default btn-sm btn-danger" ng-click="remove(x)"><span
+                                class="glyphicon glyphicon-remove"></span> Delete</a>
+                    </td>
+                </tr>
+            </table>
+            <hr>
+            <button class="btn btn-default previous" ng-disabled="currentPage == 0"
+                    ng-click="currentPage=currentPage-1">
+                Previous
+            </button>
+            {{currentPage+1}}/{{numberOfPages()}}
+            <button class="btn btn-default next" ng-disabled="currentPage >= ingredients.length/pageSize - 1"
+                    ng-click="currentPage=currentPage+1">
+                Next
+            </button>
+        </div>
+    </div>
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+        Add new ingredient
+    </button>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">New ingredient:</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fixed">
+                        <form role="form" class="">
+                            <div class="form-group">
+                                <label for="ingredientName">Name:</label>
+                                <input type="text" class="form-control" id="ingredientName"
+                                       placeholder="Enter ingredient"
+                                       ng-model="entered"/>
+                                {{entered}}
+                            </div>
+                            <div class="form-group">
+                                <label for="ingredientClass">Class:</label>
+                                <input type="text" class="form-control" id="ingredientClass"
+                                       placeholder="Enter ingredient"
+                                       ng-model="class"/>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <a type="button" href="#/ingredient" class="btn btn-primary" ng-disabled=!entered
+                       ng-click="add(entered)">Save changes</a>
+                </div>
             </div>
+            <!-- /.modal-content -->
         </div>
+        <!-- /.modal-dialog -->
     </div>
-    <div class="panel-body">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>id</th>
-                <th>name</th>
-                <th>class</th>
-                <th>action</th>
-            </tr>
-            </thead>
-            <tr ng-repeat="x in ingredients | filter:query | filter:class | startFrom:currentPage*pageSize | limitTo:pageSize">
-                <td>{{x._id}}</td>
-                <td>{{x.name}}</td>
-                <td>{{x.class}}</td>
-                <td>
-                    <a class="btn btn-default btn-sm btn-warning" ng-click="">Edit <span
-                            class="glyphicon glyphicon-edit"></span></a>
-                    <a class="btn btn-default btn-sm btn-danger" ng-click="remove(x)">Delete <span
-                            class="glyphicon glyphicon-remove"></span></a>
-                </td>
-            </tr>
-        </table>
-        <hr>
-        <button class="btn btn-default previous" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
-            Previous
-        </button>
-        {{currentPage+1}}/{{numberOfPages()}}
-        <button class="btn btn-default next" ng-disabled="currentPage >= ingredients.length/pageSize - 1"
-                ng-click="currentPage=currentPage+1">
-            Next
-        </button>
-    </div>
+    <!-- /.modal -->
 </div>
-
-<script type="text/ng-template" id="myModalContent.html">
-    <div class="modal-header">
-        <h3 class="modal-title">I'm a modal!</h3>
-    </div>
-    <div class="modal-body">
-        <ul>
-            <li ng-repeat="item in items">
-                <a ng-click="selected.item = item">{{ item }}</a>
-            </li>
-        </ul>
-        Selected: <b>{{ selected.item }}</b>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="ok()">OK</button>
-        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-    </div>
-</script>
-<button popover-template="'templateUrl'" popover-title="New ingredient" class="btn btn-default">Add new ingredient
-</button>
-<script type="text/ng-template" id="templateUrl">
-    <form action="" role="form" class="form-inline">
-        <div class="form-group">
-            <label for="ingredient">New Ingredient:</label>
-            <input type="text" class="form-control" id="ingredient" placeholder="Enter ingredient" ng-model="entered"/>
-            <button class="btn btn-default form-control" ng-disabled="!entered" ng-click="add(entered)">add</button>
-        </div>
-
-    </form>
-</script>

@@ -17,12 +17,12 @@ menuCtrl.controller('headCtrl',function($scope,$location){
 menuCtrl.controller('ingredientCtrl', function ($scope, ingredientsManager) {
     $scope.compare = [];
     ingredientsManager.getIngredients(function (ref) {
+        console.log("3");
         $scope.ingredients = ref;
         $scope.ingredients.forEach(function (ingredient) {
             $scope.compare.push(ingredient.name);
         });
     });
-
     $scope.currentPage = 0;
     $scope.pageSize = 8;
     $scope.numberOfPages=function(){

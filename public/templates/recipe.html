@@ -1,4 +1,4 @@
-<br>
+<div>
 <div class="panel panel-default">
     <div class="panel-heading">
         <div class="row">
@@ -58,58 +58,83 @@
     </div>
 </div>
 
-<button popover-template="'templateUrl'" popover-title="New ingredient" class="btn btn-default">Add new ingredient
+<button type="button" class="btn btn-success" data-toggle="modal" data-target=".bs-example-modal-lg">
+    Add new Recipe
 </button>
-<script type="text/ng-template" id="templateUrl">
-
-    <div class="container-fluid">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3>Ingredients: Click to select!</h3>
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">New Recipe:</h4>
             </div>
-            <div class="panel-body" style="height:300px;overflow: auto">
-                <div class="col-md-3 col-sm-6 col-lg-2" ng-repeat="(id,ingredient) in dictionary">
-                    <br>
-                    <button class="btn btn-block btn-lg" ng-click="onclick(id)"
-                            ng-class="ingredient.select ? 'btn-danger':'btn-info'"
-                            style="overflow: hidden">{{ingredient.name}}
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4>Add new Recipe!</h4>
-            </div>
-            <div class="panel-body">
-                <form action="" class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label class="control-label col-md-2" for="newRecipe">New recipe:</label>
-
-                        <div class="col-md-8">
-                            <input type="text" class="form-control " id="newRecipe" ng-model="entered"
-                                   placeholder="Enter Recipe"/></div>
-                        <button class="btn btn-default col-md-1" ng-disabled="!entered"
-                                ng-click="save(entered)">save
-                        </button>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-2" for="ingredients">Ingredients Used:</label>
-
-                        <div class="col-md-10">
-                            <div class="panel-body" id="ingredients">
-                                <div class="row">
-                                    <div class="col-md-4 alert alert-warning" ng-repeat="(id,ingredient) in dictionary"
-                                         ng-show="ingredient.select">
-                                        {{ingredient.name}} <a class="close" ng-click="release(id)">X</a>
-                                    </div>
-                                </div>
+            <div class="modal-body">
+                <div class="container-fixed">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Ingredients: Click to select!
+                        </div>
+                        <div class="panel-body" style="height:300px;overflow: auto">
+                            <div class="col-md-3 col-sm-6 col-lg-2" ng-repeat="(id,ingredient) in dictionary">
+                                <br>
+                                <button class="btn btn-block" ng-click="onclick(id)"
+                                        ng-class="ingredient.select ? 'btn-danger':'btn-info'"
+                                        style="overflow: hidden">{{ingredient.name}}
+                                </button>
                             </div>
                         </div>
                     </div>
-                </form>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Add new Recipe!
+                        </div>
+                        <div class="panel-body">
+                            <form action="" class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2" for="newRecipe">New recipe:</label>
+
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control " id="newRecipe" ng-model="entered"
+                                               placeholder="Enter Recipe"/></div>
+                                    <button class="btn btn-default col-md-1" ng-disabled="!entered"
+                                            ng-click="save(entered)">save
+                                    </button>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2" for="ingredients">Ingredients Used:</label>
+
+                                    <div class="col-md-10">
+                                        <div class="panel-body" id="ingredients">
+                                            <div class="row">
+                                                <div class="col-md-4 alert alert-warning" ng-repeat="(id,ingredient) in dictionary"
+                                                     ng-show="ingredient.select">
+                                                    {{ingredient.name}} <a class="close" ng-click="release(id)">X</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <a type="button" class="btn btn-primary" ng-disabled=!entered
+                   ng-click="add(entered)">Save changes</a>
             </div>
         </div>
+        <!-- /.modal-content -->
     </div>
-</script>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+</div>
+
+
+
+
+
+
