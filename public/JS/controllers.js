@@ -16,15 +16,21 @@ menuCtrl.controller('headCtrl',function($scope,$location){
 
 menuCtrl.controller('ingredientCtrl', function ($scope, ingredientsManager) {
     $scope.compare = [];
+    $scope.ingredients=[];
     ingredientsManager.getIngredients(function (ref) {
-        console.log("3");
-        $scope.ingredients = ref;
+       $scope.test=ref;
+        $scope.ingredients = $scope.test;
         $scope.ingredients.forEach(function (ingredient) {
             $scope.compare.push(ingredient.name);
         });
     });
+    ingredientsManager.getN(function(num){
+        $scope.n=num;
+    });
+    $scope.change=function(){ingredientsManager.change();
+    console.log($scope.n);};
     $scope.currentPage = 0;
-    $scope.pageSize = 8;
+    $scope.pageSize = 13;
     $scope.numberOfPages=function(){
         return Math.ceil($scope.ingredients.length/$scope.pageSize);
     };
@@ -55,7 +61,7 @@ menuCtrl.controller('recipeCtrl', function ($scope, recipesManager) {
         $scope.recipes = ref;
     });
     $scope.currentPage = 0;
-    $scope.pageSize = 8;
+    $scope.pageSize = 13;
     $scope.numberOfPages=function(){
         return Math.ceil($scope.recipes.length/$scope.pageSize);
     };

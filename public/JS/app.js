@@ -1,7 +1,7 @@
 /**
  * Created by Chenghuijin on 2015/7/6.
  */
-var app = angular.module('menuApp', ['ui.bootstrap','ngRoute', 'menuFactories', 'menuControllers']);
+var app = angular.module('menuApp',['ngRoute', 'menuFactories', 'menuControllers']);
 app.config(function ($routeProvider) {
     $routeProvider.
         when('/menu', {
@@ -31,7 +31,8 @@ app.filter('filterForHash',function(){
 });
 app.filter('startFrom', function() {
     return function(input, start) {
+        if(input[0]){
         start = +start; //parse to int
-        return input.slice(start);
+        return input.slice(start);}
     }
 });

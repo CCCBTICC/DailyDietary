@@ -5,7 +5,13 @@ var menuFactory = angular.module('menuFactories', []);
 
 menuFactory.factory('ingredientsManager', function ($http) {
     var ingredientsUrl = "http://localhost:8080/ingredients";
-    var ingredients = [];
+        var ingredients = [];
+    var n=[{n:20}];
+    var m={n:30};
+    var change= function(){
+       n[0]=m;
+        console.log(n);
+    };
     var get = function (callback) {
         if (!ingredients[0]) {
             console.log("1\n");
@@ -32,6 +38,8 @@ menuFactory.factory('ingredientsManager', function ($http) {
     };
 
     return {
+        getN:function(cb){cb(n)},
+        change:change,
         getIngredients: get,
         addIngredient: function (name, callback) {
             var data = {action: "add", name: name};

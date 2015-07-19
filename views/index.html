@@ -7,12 +7,12 @@
     <script src="./bower_components/angular-route/angular-route.min.js"></script>
     <script src="./bower_components/jquery/dist/jquery.min.js"></script>
     <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css"/>
-    <script src="./bootstrap-gh-pages/ui-bootstrap-tpls-0.13.0.js"></script>
     <script src="./JS/app.js"></script>
     <script src="./JS/factories.js"></script>
     <script src="./JS/controllers.js"></script>
 
     <script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./stylesheets/style.css"/>
 </head>
 <body ng-app="menuApp" ng-controller="headCtrl">
 <nav class="nav navbar-inverse navbar-fixed-top">
@@ -20,8 +20,7 @@
         <div class="container">
             <div class="navbar-header">
                 <a href="#" class="navbar-brand visible-xs">DailyDietary</a>
-                <button type="button" class="navbar-toggle" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-3" ng-click="isCollapsed = !isCollapsed">
+                <button type="button" class="navbar-toggle" ng-click="isCollapsed = !isCollapsed">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -30,13 +29,13 @@
             </div>
             <nav class="hidden-xs">
                 <a href="#" class="navbar-brand">DailyDietary</a>
-                <ul class="nav navbar-nav right">
-                    <li ng-class="{ active: isActive('/menu') }"><a href="#/menu">Menu</a></li>
-                    <li ng-class="isActive('/recipe') ?'active':''"><a href="#/recipe">Recipes</a></li>
-                    <li ng-class="isActive('/ingredient') ?'active':''"><a href="#/ingredient">Ingredients</a></li>
+                <ul class="nav navbar-nav">
+                    <li ng-class="{ active: isActive('/me') }"><a href="#/menu">Menu</a></li>
+                    <li ng-class="isActive('/r') ?'active':''"><a href="#/recipe">Recipes</a></li>
+                    <li ng-class="isActive('/i') ?'active':''"><a href="#/ingredient">Ingredients</a></li>
                 </ul>
             </nav>
-            <nav class="visible-xs collapse" collapse="!isCollapsed" style="overflow: hidden">
+            <nav class="visible-xs collapse" ng-show="isCollapsed" style="overflow: hidden">
                 <ul class="nav navbar-nav">
                     <li ng-class="{ active: isActive('/menu') }"><a href="#/menu"
                                                                     ng-click="isCollapsed = !isCollapsed">Menu</a></li>

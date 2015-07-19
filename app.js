@@ -9,11 +9,13 @@ var ingredients = require('./routes/ingredients');
 var recipes = require('./routes/recipes');
 
 var MongoClient = require('mongodb').MongoClient;
+var assert =require('assert');
 var dbURL = 'mongodb://localhost:27017/recipeApp';
 var DB;
 
 MongoClient.connect(dbURL, function(err, db) {
-    console.log('conntected');
+    assert.equal(null,err);
+    console.log('Conntected correctly to server');
     DB = db;
 });
 
